@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Lid Awake",
+  "version": "0.1.0",
+  "identifier": "dev.gratchs.lidawake",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "LID AWAKE",
+        "width": 200,
+        "height": 100,
+        "minWidth": 200,
+        "minHeight": 100,
+        "maxWidth": 200,
+        "maxHeight": 100,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "closable": true,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": true,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: http://asset.localhost; connect-src ipc: http://ipc.localhost"
+    },
+    "macOSPrivateApi": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app"],
+    "category": "Utility",
+    "shortDescription": "Toggle macOS lid-close sleep behavior.",
+    "macOS": {
+      "minimumSystemVersion": "11.0",
+      "infoPlist": "./Info.plist"
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns"
+    ]
+  }
+}
