@@ -74,6 +74,8 @@ Quit an existing copy of Lid Awake before replacing it.
 ## How it works
 
 Lid Awake reads the system-wide `SleepDisabled` value from `/usr/bin/pmset -g`.
+On macOS versions that omit this line until `disablesleep` has been enabled,
+the missing line is treated as the normal sleep state (`SleepDisabled=0`).
 
 - **ON** sets `SleepDisabled=1`, keeping the Mac awake when the lid is closed.
 - **OFF** sets `SleepDisabled=0`, restoring the normal macOS sleep behavior.

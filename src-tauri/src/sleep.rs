@@ -86,7 +86,10 @@ fn parse_pmset_output(output: &str) -> Result<SleepStatus, String> {
             .parse::<i64>()
             .map(|_| SleepStatus::Disabled)
             .map_err(|_| format!("SleepDisabledの値が不正です: {raw}")),
-        None => Err("pmset -gの出力にSleepDisabledがありません".to_owned()),
+        // macOS versions that have never had `disablesleep` enabled omit the
+        // SleepDisabled line entirely. The omitted state is the normal sleep
+        // behavior, equivalent to SleepDisabled=0.
+        None => Ok(SleepStatus::Enabled),
     }
 }
 
@@ -153,10 +156,10 @@ mod tests {
     }
 
     #[test]
-    fn rejects_missing_key() {
+    fn treats_missing_key_as_sleep_enabled() {
         assert_eq!(
             parse_pmset_output("System-wide power settings:\n"),
-            Err("pmset -gの出力にSleepDisabledがありません".to_owned())
+            Ok(SleepStatus::Enabled)
         );
     }
 
